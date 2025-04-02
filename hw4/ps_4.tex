@@ -28,6 +28,77 @@ to the derivative when the input takes (i) a large positive value and (ii) a lar
 
 \vspace{5em}
 
+\noindent  Answer: 
+
+To compute the derivative of the logistic sigmoid function:
+
+\begin{equation}
+    h = \sigma(z) = \frac{1}{1 + e^{-z}},
+\end{equation}
+
+\noindent Part (i): Compute the Derivative
+Differentiating $h$ with respect to $z$:
+
+\begin{equation}
+    \frac{d}{dz} h = \frac{d}{dz} \left( \frac{1}{1 + e^{-z}} \right).
+\end{equation}
+
+Using the quotient rule, let $f(z) = 1$ and $g(z) = 1 + e^{-z}$, so that:
+
+\begin{equation}
+    \frac{d}{dz} h = \frac{f' g - f g'}{g^2}.
+\end{equation}
+
+Since $f' = 0$ and $g' = -e^{-z}$, we get:
+
+\begin{equation}
+    \frac{d}{dz} h = \frac{(0)(1+e^{-z}) - (1)(-e^{-z})}{(1+e^{-z})^2}.
+\end{equation}
+
+Simplifying:
+
+\begin{equation}
+    \frac{d}{dz} h = \frac{e^{-z}}{(1+e^{-z})^2}.
+\end{equation}
+
+Rewriting $e^{-z}$ in terms of $h$:
+
+\begin{equation}
+    e^{-z} = \frac{1}{e^z} = \frac{1}{\frac{1}{h} - 1} = h(1 - h) =  \sigma(z) (1 -  \sigma(z))
+\end{equation}
+
+Thus, the derivative simplifies to:
+
+\begin{equation}
+    \frac{\partial h}{\partial z} = h(1 - h) =  \sigma(z) (1 -  \sigma(z))
+\end{equation}
+
+
+\noindent  Part (ii): Behavior for Large $z$
+
+\begin{itemize}
+    \item \textbf{When} $z \to +\infty$:
+    \begin{equation}
+        h = \sigma(z) \approx 1.
+    \end{equation}
+    \begin{equation}
+        h(1 - h) \approx 1(1 - 1) = 0.
+    \end{equation}
+    
+    \item \textbf{When} $z \to -\infty$:
+    \begin{equation}
+        h = \sigma(z) \approx 0.
+    \end{equation}
+    \begin{equation}
+        h(1 - h) \approx 0(1 - 0) = 0.
+    \end{equation}
+\end{itemize}
+
+
+\newpage
+
+
+
 \section*{Problem 4.2 (3 points)}
 
 Calculate the derivative \( \frac{\partial \ell_i}{\partial f[x_i, \phi]} \) for the binary 
@@ -44,5 +115,37 @@ where the function \( \sigma(\cdot) \) is the logistic sigmoid, defined as:
 \end{equation}
 
 \vspace{5em}
+
+\noindent  Answer: 
+
+
+The binary classification loss function is defined as:
+
+\begin{equation}
+    \ell_i = -(1 - y_i) \log [1 - \sigma(f[x_i, \phi])] - y_i \log [\sigma(f[x_i, \phi])].
+\end{equation}
+
+Taking the derivative with respect to $f[x_i, \phi]$, let $h = \sigma(f[x_i, \phi])$:
+
+\begin{equation}
+    \frac{\partial \ell_i}{\partial f[x_i, \phi]} = - (1 - y_i) \frac{1}{1 - h} \cdot (-\sigma(f[x_i, \phi])(1 - \sigma(f[x_i, \phi])) ) - y_i \frac{1}{h} \cdot \sigma(f[x_i, \phi])(1 - \sigma(f[x_i, \phi])).
+\end{equation}
+
+Simplifying:
+
+\begin{equation}
+    \frac{\partial \ell_i}{\partial f[x_i, \phi]} = \sigma(f[x_i, \phi]) (1 - \sigma(f[x_i, \phi])) \left( \frac{(1 - y_i)}{1 - \sigma(f[x_i, \phi])} - \frac{y_i}{\sigma(f[x_i, \phi])} \right).
+\end{equation}
+
+Further simplification leads to:
+
+\begin{equation}
+    \frac{\partial \ell_i}{\partial f[x_i, \phi]} = \sigma(f[x_i, \phi]) - y_i.
+\end{equation}
+
+Conclusion: The gradient of the loss function with respect to $f[x_i, \phi]$ is simply $\sigma(f[x_i, \phi]) - y_i$. This result is useful in logistic regression and neural networks, where it serves as the basis for gradient-based optimization algorithms such as stochastic gradient descent.
+
+
+
 
 \end{document}

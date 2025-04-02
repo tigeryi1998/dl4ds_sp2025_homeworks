@@ -6,7 +6,9 @@
 \begin{center}
     \LARGE {Problem Set 5 - Regularization} \\[1em]
     \Large{DS542 – DL4DS} \\[0.5em]
-    \large Spring, 2025
+    \large Spring, 2025 \\
+    \large Sicheng Yi (Tiger Yi) \\
+    \large tigeryi@bu.edu
 \end{center}
 
 \vspace{2em}
@@ -31,7 +33,22 @@ Moreover, if this is a correction submission after the initial submission,
 you must provide a reflection on what you learned from the initial submission 
 and how you corrected it.
 
-\vspace{3em}
+\
+
+\noindent Answer:
+
+\
+
+\noindent  For problem 9.1, I did NOT use any generate AI like the ChatGPT, I typed all the latex equations in the .tex file
+
+\ 
+
+\noindent  For problem 9.5, I did NOT use any generate AI like the ChatGPT, I typed all the latex equations in the .tex file
+
+\newpage
+
+
+% \vspace{3em}
 
 \section*{Problem 9.1 (4 points)}
 Consider a model where the prior distribution over the parameters is a normal distribution with mean zero and variance
@@ -49,7 +66,49 @@ $\sigma^2_{\phi}$ so that
 
 Show that the associated loss function of this model is equivalent to L2 regularization.
 
-\vspace{3em}
+\ 
+
+\noindent Answer:
+
+\begin{equation}
+     \phi^{'} =  \arg \max_{\phi} [ \prod_{i=1}^{I} Pr(y_i | x_i, \phi) Pr(\phi) ] 
+\end{equation}
+
+
+\begin{equation}
+     \phi^{'} = - \log  \arg \min_{\phi} [ \prod_{i=1}^{I} Pr(y_i | x_i, \phi) Pr(\phi) ] 
+\end{equation}
+
+\begin{equation}
+     \phi^{'} = -  \arg \min_{\phi}  \sum_{i=1}^{I} [ \log  Pr(y_i | x_i, \phi) + \log Pr(\phi) ] 
+\end{equation}
+
+\begin{equation}
+    Pr(\phi) = \prod_{j=1}^{J} \mathcal{N}(\phi_j | 0, \sigma^2_{\phi}) \approx \prod_{j=1}^{J} C \cdot \exp( - \frac{\phi_j^2 }{2 \sigma^2_{\phi}} )
+\end{equation}
+
+\begin{equation}
+      -  \log [ Pr(\phi) ]  =  \frac{1}{2 \sigma^2_{\phi}} \sum_{j=1}^{J} \phi_j^2 = \lambda  \sum_{j=1}^{J} \phi_j^2
+\end{equation}
+
+
+\begin{equation}
+	- \log  Pr(y_i | x_i, \phi) =  \ell_i [\phi, x_i, y_i]  \,\ \text{negative log likelihood}
+\end{equation}
+
+\begin{equation}
+     \phi^{'} = \arg \min_{\phi}  \sum_{i=1}^{I} [ \ell_i [\phi, x_i, y_i] + \lambda  \sum_{j=1}^{J} \phi_j^2 ] 
+\end{equation}
+
+\noindent Therefore, I have shown the loss function is equivalent to the L2 ridge regularization with the last term: 
+
+$$ \lambda  \sum_{j=1}^{J} \phi_j^2 $$ 
+
+
+
+\newpage
+
+% \vspace{3em}
 
 \section*{Problem 9.5 (4 points)}
 
@@ -67,7 +126,47 @@ $\tilde{L}[\phi]$ is:
     \tilde{L}[\phi] = L[\phi] + \frac{\lambda}{2\alpha} \sum_{k} \phi_k^2,
 \end{equation}
 
-where $\phi$ represents the parameters, and $\alpha$ is the learning rate.
+\noindent  where $\phi$ represents the parameters, and $\alpha$ is the learning rate.
+
+\ 
+
+\noindent Answer:
+
+\
+
+\noindent Take derivative of $\tilde{L}$ with respect to $\phi$
+
+
+\begin{equation}
+	\frac{\partial \tilde{L} }{\partial \phi} = \frac{\partial L}{\partial \phi} + \frac{\lambda}{\alpha} \phi
+\end{equation}
+
+
+\begin{equation}
+    \phi \leftarrow  \phi - \alpha \frac{\partial \tilde{L}}{\partial \phi}
+\end{equation}
+
+
+\begin{equation}
+    \phi \leftarrow  \phi - \alpha ( \frac{\partial L}{\partial \phi} + \frac{\lambda}{\alpha} \phi )
+\end{equation}
+
+
+\begin{equation}
+    \phi \leftarrow  \phi - \alpha  \frac{\partial L}{\partial \phi} - \lambda \phi 
+\end{equation}
+
+
+\begin{equation}
+    \phi \leftarrow  (1 - \lambda) \phi - \alpha  \frac{\partial L}{\partial \phi} 
+\end{equation}
+
+\
+
+\noindent Therefore, gradient descent on the modified $\tilde{L}$ with L2 regularization
+
+\noindent is same as applying weight decay $\lambda$ on the old loss function $L$
+
 
 
 
